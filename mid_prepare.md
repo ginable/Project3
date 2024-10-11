@@ -19,7 +19,7 @@ video_files = [f for f in os.listdir(data_dir) if f.endswith('.mp4')]
 print(f"Number of videos: {len(video_files)}")
 ```
 
-1. 비디오에서 샘플 프레임 추출 및 시각화
+2. 비디오에서 샘플 프레임 추출 및 시각화
     - 각 비디오에서 랜덤으로 몇 개의 프레임을 추출하고 시각화하여 데이터 품질을 확인합니다. 실제 얼굴이 잘 보이는지, 데이터가 잘 구성되어 있는지 확인합니다.
     
     ```python
@@ -40,7 +40,7 @@ print(f"Number of videos: {len(video_files)}")
     ```
     
 
-1. 라벨 분포 확인
+3. 라벨 분포 확인
     - 딥페이크 탐지에서 중요하게 다룰 라벨의 분포를 파악합니다. 얼마나 많은 데이터가 ‘딥페이크’인지 ‘정상’인지 확인하여 데이터의 불균형 여부를 파악할 수 있습니다.
 
 ```python
@@ -55,7 +55,7 @@ plt.title('Distribution of Deepfake vs Real')
 plt.show()
 ```
 
-1. 프레임 간 얼굴 탐지
+4. 프레임 간 얼굴 탐지
     - 각 프레임에서 얼굴이 제대로 탐지되고 있는지 확인합니다. 얼굴이 없는 경우가 있는지, 잘못된 탐지 결과가 있는지 파악하여 후속 데이터 전처리 방향을 설정합니다.
     
     ```python
@@ -72,7 +72,7 @@ plt.show()
     ```
     
 
-1. 비디오 길이 및 해상도 분석
+5. 비디오 길이 및 해상도 분석
     - 각 비디오의 길이와 해상도를 분석하여 전처리 과정에서의 균일한 크기 조정 등의 작업을 미리 계획합니다.
 
 ```python
@@ -90,7 +90,7 @@ frame_count, width, height = analyze_video_properties(os.path.join(data_dir, vid
 print(f"Video has {frame_count} frames, with resolution {width}x{height}")
 ```
 
-1. 데이터 불균형 및 해결 전략 파악
+6. 데이터 불균형 및 해결 전략 파악
     - 라벨 분포에서 데이터가 불균형한 경우, 이를 해결하기 위한 전략을 고려해야 합니다. 데이터 증강기법이나 샘플링 방법 등을 검토
 
 # 데이터 전처리 (Data Preprocessing)
