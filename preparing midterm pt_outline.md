@@ -17,11 +17,13 @@
 
 Easy sample
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/8d1d90f7-80cd-4c0e-941d-d9b24981991c/image.png)
+![image](https://github.com/user-attachments/assets/f1911f5c-f095-4d39-aebe-139632d9f4dd)
+
 
 Hard sample
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/24d477de-d001-4e7e-8066-e320868b7fa8/image.png)
+![image](https://github.com/user-attachments/assets/edcffd47-a544-45a1-9750-328ceb786a2f)
+
 
 제약조건
 
@@ -33,7 +35,8 @@ CPU/GPU notebook에서 9 시간 이내 동작
 
 평가 방법
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/07b855bb-05ff-4f8f-9063-a83262707b7f/image.png)
+![image](https://github.com/user-attachments/assets/b5524019-aa39-490b-a5de-6e0c5d7bf15f)
+
 
 - **n**: 예측하는 비디오의 수 (전체 샘플 수)
 - **y^i**: i번째 비디오가 **FAKE**일 확률에 대한 예측값 (모델의 예측 확률, 0과 1 사이의 값)
@@ -50,7 +53,8 @@ Format에 맞는 제출 파일을 생성하여 Kaggle에 업로드
 
 Comma separated variables (CSV) file 제출
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/20702f58-c9cf-45bf-a129-ef7ff8593d8c/image.png)
+![image](https://github.com/user-attachments/assets/01a9107b-6fc3-4547-bc32-d1fc8a897f98)
+
 
 Video는 image를 매우 짧은 간격으로 연결한 미디어
 
