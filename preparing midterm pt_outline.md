@@ -1,8 +1,4 @@
-
 - Deepfake detection challenge (DFDC)
-
-모든 내용은 노션 링크에(이미지 등 업로드 어려워서)
-https://stingy-periodical-217.notion.site/10b362bfbf5c8034be71f26ac0ab3364
 
 **개요**
 
@@ -63,16 +59,3 @@ Video는 image를 매우 짧은 간격으로 연결한 미디어
 고품질의 video는 초당 30 frame == 30 fps (frame per second)
 
 30fps의 10초 길이 video는 900개의 image로 구성
-
-
-
-
-
-
-
-
-
-
-
-
-
