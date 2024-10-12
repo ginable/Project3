@@ -1,10 +1,11 @@
 딥페이크 연구동향
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/16196ace-c937-4bb6-94bc-fc5ae559ece1/image.png)
+![image](https://github.com/user-attachments/assets/bd6b21aa-2de3-44b4-9f19-c9d7f5d48462)
+
 
 가상의 얼굴 생성하여 합성
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/f999ad39-0023-420f-a5b7-090e1fcf59ae/image.png)
+![image](https://github.com/user-attachments/assets/843c7c7c-d16f-4d9b-9fae-4fda68f63d02)
 
 GAN을 활용한 생성
 
@@ -12,13 +13,14 @@ Style GAN으로 학습된 이미지를 이용한 가짜이미지 생성
 
 기존의 얼굴에 특정 속성만 바꿈(안경, 머리숱, 피부색 등
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/28aa28ea-552f-4be9-8cb7-d506c4985c4a/image.png)
+![image](https://github.com/user-attachments/assets/acfdf43d-1d09-4302-9674-bb5bdadc1efc)
+
 
 이역시도 GAN기반의 생생 ex) Star Gan
 
 표정바꿈*실질적이용
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/7fe90021-4ba1-482a-88fd-a6b880e8faa3/image.png)
+![image](https://github.com/user-attachments/assets/4fc85d15-2e5d-4037-b2bf-9c0343dc9f85)
 
 source: 피해 얼굴
 
@@ -32,7 +34,8 @@ ex:Face3face, synthesizing obama
 
 서로다른 두사람 얼굴 교체*실질적이용
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/3e0ed62e-b075-4f34-ae47-9f00c999cc60/image.png)
+![image](https://github.com/user-attachments/assets/d2322186-dc26-498e-8339-cdc70f3cd37d)
+
 
 특정한 사람과 다른사람의 얼굴의 교체
 
@@ -40,7 +43,8 @@ ex:Face3face, synthesizing obama
 
 ex: faceswap, deepfacelab과 같은 라이브러리
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/59f787c1-8f53-4c41-af51-5ce5b2f838fd/image.png)
+![image](https://github.com/user-attachments/assets/2c8e1159-a68b-42a6-ba54-2e3ab6a7f9dc)
+
 
 2가지 접근법: 
 
@@ -50,7 +54,8 @@ ex: faceswap, deepfacelab과 같은 라이브러리
 
 오토인코더
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/bb8111ad-d76e-438f-845a-f46cb62011c0/image.png)
+![image](https://github.com/user-attachments/assets/eb7194c5-f642-4bf5-ae18-f84875017136)
+
 
 DNN구조의 딥러닝 모델 이미지의 특징(눈코입)과 같은 내용을 비지도학습
 
@@ -62,7 +67,7 @@ DNN구조의 딥러닝 모델 이미지의 특징(눈코입)과 같은 내용을
 
 extraction 학습을 위한 얼굴의 이미지를 추출
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/5145b434-78cf-4661-b0ff-8d1701f125ba/image.png)
+![image](https://github.com/user-attachments/assets/b74e9cd6-ac75-493a-82de-6b1e5fb4cf70)
 
 주요 랜드마크 alignment파일을 생성
 
@@ -70,7 +75,8 @@ extraction 학습을 위한 얼굴의 이미지를 추출
 
 training
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/48bbd516-e757-4ce8-b7ba-a66ad02b729b/image.png)
+![image](https://github.com/user-attachments/assets/db747a96-ebbc-4860-88bf-55714b1ce7e8)
+
 
 텐서플로우 기반으로 동작,
 
@@ -88,7 +94,8 @@ latent에서는 외곽이나 눈코입 위치만 학습
 
 converting
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/3a283181-dc98-4169-a32a-04ec88c59838/image.png)
+![image](https://github.com/user-attachments/assets/1beaf0a3-4dd4-4294-b84f-8f9b89bcb9fd)
+
 
 피해자의 얼굴 변환하여
 
@@ -98,7 +105,8 @@ converting
 
 피해자의 얼굴이 바뀌어 들어감
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/cfa628f4-b248-43ca-b13f-5f73853b9454/image.png)
+![image](https://github.com/user-attachments/assets/77ad67b2-e44b-4ce1-b142-59310cc3ca3a)
+
 
 1000장에서 만장의 이미지
 
@@ -106,18 +114,20 @@ converting
 
 deepfakedetection현황
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/a90b29f0-d914-489d-9c95-a29ea65ffe26/image.png)
+![image](https://github.com/user-attachments/assets/9c2b2bd8-d35e-4251-91f3-e77c287b80f7)
 
 매프래임마다 얼굴위치를 찾아서 판별- deepclasifier: FaceForensics ICCV
 
 Temporal 비디오에서 프래임간의 연결관계 시간적 특성 탐지 : 프레임간의 연결을 확인하는것 -CVPR Recurrent Convolutional Strategies for Face~ 
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/5eddf820-d275-481c-a82d-b445b1c80642/image.png)
+![image](https://github.com/user-attachments/assets/c3cc506a-7c85-4d90-96da-4c1b0486ccef)
+
 
 faceforencsic: 각 프래임마다 effnet넣어서 성능
 
 recurrent: cnn+rnn
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/14b7775d-b6b5-40e1-be84-e9327f16fd78/67b22173-13ec-45bf-b607-2a76c5215429/image.png)
+![image](https://github.com/user-attachments/assets/e41ed145-6bb1-4376-9db1-1db7835643a1)
+
 
 xceoptionNet 이 결과가 괜찮은편
