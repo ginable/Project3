@@ -27,6 +27,7 @@ https://www.kaggle.com/code/robikscube/faceforensics-baseline-dlib-no-internet
 Starter kit
 
 vote 3순위
+
 고승우
 https://www.kaggle.com/code/robikscube/kaggle-deepfake-detection-introduction
 
