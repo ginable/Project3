@@ -1,4 +1,3 @@
-**선정 주제** 
 
 - Deepfake detection challenge (DFDC)
 
@@ -61,3 +60,16 @@ Video는 image를 매우 짧은 간격으로 연결한 미디어
 고품질의 video는 초당 30 frame == 30 fps (frame per second)
 
 30fps의 10초 길이 video는 900개의 image로 구성
+
+
+
+
+
+
+
+
+
+
+
+
+
