@@ -19,7 +19,7 @@ https://www.kaggle.com/code/robikscube/faceforensics-baseline-dlib-no-internet
 - The authors provide different types of models:
     - From Appendix 4 of the paper we see the published accuracy:
         
-        ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/afca1fa2-51fe-446e-bfc2-70c740c52f50/6fcab5b4-5393-428d-94f1-20ee01cb0ac8/image.png)
+        ![image.png]([https://prod-files-secure.s3.us-west-2.amazonaws.com/afca1fa2-51fe-446e-bfc2-70c740c52f50/6fcab5b4-5393-428d-94f1-20ee01cb0ac8/image.png](https://www.notion.so/SW_-11c273f9b9ae80da91c3f709909888c7?pvs=4#11d273f9b9ae80888d6fcaa5ce055e74))
         
     - We have:
         - Full image models
