@@ -1,0 +1,196 @@
+Epoch 1/10
+------------------------------
+Step 100: Train Loss: 1.3883 | Train Acc: 0.5897
+Step 200: Train Loss: 0.9477 | Train Acc: 0.7117
+Step 300: Train Loss: 0.7724 | Train Acc: 0.7640
+Step 400: Train Loss: 0.6594 | Train Acc: 0.7982
+Step 500: Train Loss: 0.5894 | Train Acc: 0.8186
+Step 600: Train Loss: 0.5366 | Train Acc: 0.8332
+Step 700: Train Loss: 0.4973 | Train Acc: 0.8444
+Step 800: Train Loss: 0.4646 | Train Acc: 0.8540
+Step 900: Train Loss: 0.4407 | Train Acc: 0.8613
+Step 1000: Train Loss: 0.4203 | Train Acc: 0.8673
+Step 1100: Train Loss: 0.4024 | Train Acc: 0.8729
+Step 1200: Train Loss: 0.3875 | Train Acc: 0.8772
+Step 1300: Train Loss: 0.3721 | Train Acc: 0.8820
+Step 1400: Train Loss: 0.3596 | Train Acc: 0.8855
+Step 1500: Train Loss: 0.3486 | Train Acc: 0.8891
+Epoch 1 Summary
+Train Loss: 0.3429 | Train Acc: 0.8909
+Val Loss: 0.1556 | Val Acc: 0.9470
+------------------------------
+Epoch 2/10
+------------------------------
+Step 1600: Train Loss: 0.1126 | Train Acc: 0.9704
+Step 1700: Train Loss: 0.1146 | Train Acc: 0.9644
+Step 1800: Train Loss: 0.1132 | Train Acc: 0.9652
+Step 1900: Train Loss: 0.1163 | Train Acc: 0.9634
+Step 2000: Train Loss: 0.1173 | Train Acc: 0.9632
+Step 2100: Train Loss: 0.1176 | Train Acc: 0.9629
+Step 2200: Train Loss: 0.1173 | Train Acc: 0.9627
+Step 2300: Train Loss: 0.1158 | Train Acc: 0.9625
+Step 2400: Train Loss: 0.1189 | Train Acc: 0.9613
+Step 2500: Train Loss: 0.1205 | Train Acc: 0.9609
+Step 2600: Train Loss: 0.1206 | Train Acc: 0.9608
+Step 2700: Train Loss: 0.1206 | Train Acc: 0.9606
+Step 2800: Train Loss: 0.1219 | Train Acc: 0.9601
+Step 2900: Train Loss: 0.1226 | Train Acc: 0.9597
+Step 3000: Train Loss: 0.1242 | Train Acc: 0.9593
+Step 3100: Train Loss: 0.1252 | Train Acc: 0.9592
+Epoch 2 Summary
+Train Loss: 0.1253 | Train Acc: 0.9591
+Val Loss: 0.1225 | Val Acc: 0.9584
+------------------------------
+Epoch 3/10
+------------------------------
+Step 3200: Train Loss: 0.0776 | Train Acc: 0.9759
+Step 3300: Train Loss: 0.0747 | Train Acc: 0.9743
+Step 3400: Train Loss: 0.0792 | Train Acc: 0.9727
+Step 3500: Train Loss: 0.0771 | Train Acc: 0.9733
+Step 3600: Train Loss: 0.0759 | Train Acc: 0.9740
+Step 3700: Train Loss: 0.0751 | Train Acc: 0.9742
+Step 3800: Train Loss: 0.0777 | Train Acc: 0.9735
+Step 3900: Train Loss: 0.0791 | Train Acc: 0.9733
+Step 4000: Train Loss: 0.0805 | Train Acc: 0.9728
+Step 4100: Train Loss: 0.0809 | Train Acc: 0.9722
+Step 4200: Train Loss: 0.0822 | Train Acc: 0.9717
+Step 4300: Train Loss: 0.0835 | Train Acc: 0.9714
+Step 4400: Train Loss: 0.0844 | Train Acc: 0.9713
+Step 4500: Train Loss: 0.0856 | Train Acc: 0.9706
+Step 4600: Train Loss: 0.0856 | Train Acc: 0.9706
+Epoch 3 Summary
+Train Loss: 0.0859 | Train Acc: 0.9706
+Val Loss: 0.1409 | Val Acc: 0.9550
+------------------------------
+Epoch 4/10
+------------------------------
+Step 4700: Train Loss: 0.0357 | Train Acc: 0.9886
+Step 4800: Train Loss: 0.0567 | Train Acc: 0.9842
+Step 4900: Train Loss: 0.0645 | Train Acc: 0.9809
+Step 5000: Train Loss: 0.0614 | Train Acc: 0.9818
+Step 5100: Train Loss: 0.0589 | Train Acc: 0.9824
+Step 5200: Train Loss: 0.0614 | Train Acc: 0.9807
+Step 5300: Train Loss: 0.0611 | Train Acc: 0.9805
+Step 5400: Train Loss: 0.0610 | Train Acc: 0.9804
+Step 5500: Train Loss: 0.0609 | Train Acc: 0.9803
+Step 5600: Train Loss: 0.0621 | Train Acc: 0.9799
+Step 5700: Train Loss: 0.0636 | Train Acc: 0.9792
+Step 5800: Train Loss: 0.0638 | Train Acc: 0.9791
+Step 5900: Train Loss: 0.0644 | Train Acc: 0.9790
+Step 6000: Train Loss: 0.0657 | Train Acc: 0.9787
+Step 6100: Train Loss: 0.0669 | Train Acc: 0.9785
+Step 6200: Train Loss: 0.0672 | Train Acc: 0.9784
+Epoch 4 Summary
+Train Loss: 0.0677 | Train Acc: 0.9783
+Val Loss: 0.1258 | Val Acc: 0.9587
+------------------------------
+Epoch 5/10
+------------------------------
+Step 6300: Train Loss: 0.0456 | Train Acc: 0.9824
+Step 6400: Train Loss: 0.0474 | Train Acc: 0.9816
+Step 6500: Train Loss: 0.0494 | Train Acc: 0.9817
+Step 6600: Train Loss: 0.0510 | Train Acc: 0.9818
+Step 6700: Train Loss: 0.0497 | Train Acc: 0.9830
+Step 6800: Train Loss: 0.0508 | Train Acc: 0.9822
+Step 6900: Train Loss: 0.0491 | Train Acc: 0.9825
+Step 7000: Train Loss: 0.0509 | Train Acc: 0.9820
+Step 7100: Train Loss: 0.0531 | Train Acc: 0.9815
+Step 7200: Train Loss: 0.0532 | Train Acc: 0.9815
+Step 7300: Train Loss: 0.0535 | Train Acc: 0.9815
+Step 7400: Train Loss: 0.0540 | Train Acc: 0.9812
+Step 7500: Train Loss: 0.0545 | Train Acc: 0.9810
+Step 7600: Train Loss: 0.0545 | Train Acc: 0.9811
+Step 7700: Train Loss: 0.0549 | Train Acc: 0.9809
+Step 7800: Train Loss: 0.0549 | Train Acc: 0.9811
+Epoch 5 Summary
+Train Loss: 0.0552 | Train Acc: 0.9810
+Val Loss: 0.1478 | Val Acc: 0.9524
+------------------------------
+Epoch 6/10
+------------------------------
+Step 7900: Train Loss: 0.0347 | Train Acc: 0.9879
+Step 8000: Train Loss: 0.0450 | Train Acc: 0.9838
+Step 8100: Train Loss: 0.0438 | Train Acc: 0.9849
+Step 8200: Train Loss: 0.0423 | Train Acc: 0.9856
+Step 8300: Train Loss: 0.0419 | Train Acc: 0.9856
+Step 8400: Train Loss: 0.0426 | Train Acc: 0.9854
+Step 8500: Train Loss: 0.0432 | Train Acc: 0.9855
+Step 8600: Train Loss: 0.0457 | Train Acc: 0.9845
+Step 8700: Train Loss: 0.0460 | Train Acc: 0.9845
+Step 8800: Train Loss: 0.0468 | Train Acc: 0.9841
+Step 8900: Train Loss: 0.0473 | Train Acc: 0.9840
+Step 9000: Train Loss: 0.0468 | Train Acc: 0.9842
+Step 9100: Train Loss: 0.0469 | Train Acc: 0.9842
+Step 9200: Train Loss: 0.0478 | Train Acc: 0.9839
+Step 9300: Train Loss: 0.0483 | Train Acc: 0.9838
+Epoch 6 Summary
+Train Loss: 0.0487 | Train Acc: 0.9836
+Val Loss: 0.1434 | Val Acc: 0.9570
+------------------------------
+Epoch 7/10
+------------------------------
+Step 9400: Train Loss: 0.0364 | Train Acc: 0.9886
+Step 9500: Train Loss: 0.0334 | Train Acc: 0.9908
+Step 9600: Train Loss: 0.0312 | Train Acc: 0.9904
+Step 9700: Train Loss: 0.0337 | Train Acc: 0.9893
+Step 9800: Train Loss: 0.0346 | Train Acc: 0.9890
+Step 9900: Train Loss: 0.0353 | Train Acc: 0.9889
+Step 10000: Train Loss: 0.0360 | Train Acc: 0.9886
+Step 10100: Train Loss: 0.0374 | Train Acc: 0.9882
+Step 10200: Train Loss: 0.0379 | Train Acc: 0.9882
+Step 10300: Train Loss: 0.0386 | Train Acc: 0.9878
+Step 10400: Train Loss: 0.0390 | Train Acc: 0.9877
+Step 10500: Train Loss: 0.0394 | Train Acc: 0.9874
+Step 10600: Train Loss: 0.0399 | Train Acc: 0.9872
+Step 10700: Train Loss: 0.0404 | Train Acc: 0.9869
+Step 10800: Train Loss: 0.0406 | Train Acc: 0.9869
+Step 10900: Train Loss: 0.0414 | Train Acc: 0.9866
+Epoch 7 Summary
+Train Loss: 0.0417 | Train Acc: 0.9865
+Val Loss: 0.1464 | Val Acc: 0.9561
+------------------------------
+Epoch 8/10
+------------------------------
+Step 11000: Train Loss: 0.0397 | Train Acc: 0.9868
+Step 11100: Train Loss: 0.0308 | Train Acc: 0.9906
+Step 11200: Train Loss: 0.0324 | Train Acc: 0.9906
+Step 11300: Train Loss: 0.0330 | Train Acc: 0.9896
+Step 11400: Train Loss: 0.0322 | Train Acc: 0.9900
+Step 11500: Train Loss: 0.0328 | Train Acc: 0.9897
+Step 11600: Train Loss: 0.0335 | Train Acc: 0.9892
+Step 11700: Train Loss: 0.0332 | Train Acc: 0.9893
+Step 11800: Train Loss: 0.0334 | Train Acc: 0.9892
+Step 11900: Train Loss: 0.0344 | Train Acc: 0.9888
+Step 12000: Train Loss: 0.0342 | Train Acc: 0.9888
+Step 12100: Train Loss: 0.0341 | Train Acc: 0.9888
+Step 12200: Train Loss: 0.0343 | Train Acc: 0.9888
+Step 12300: Train Loss: 0.0349 | Train Acc: 0.9884
+Step 12400: Train Loss: 0.0351 | Train Acc: 0.9883
+Step 12500: Train Loss: 0.0356 | Train Acc: 0.9880
+Epoch 8 Summary
+Train Loss: 0.0356 | Train Acc: 0.9880
+Val Loss: 0.1579 | Val Acc: 0.9546
+------------------------------
+Epoch 9/10
+------------------------------
+Step 12600: Train Loss: 0.0357 | Train Acc: 0.9880
+Step 12700: Train Loss: 0.0299 | Train Acc: 0.9903
+Step 12800: Train Loss: 0.0327 | Train Acc: 0.9893
+Step 12900: Train Loss: 0.0332 | Train Acc: 0.9890
+Step 13000: Train Loss: 0.0325 | Train Acc: 0.9890
+Step 13100: Train Loss: 0.0317 | Train Acc: 0.9893
+Step 13200: Train Loss: 0.0304 | Train Acc: 0.9897
+Step 13300: Train Loss: 0.0312 | Train Acc: 0.9891
+Step 13400: Train Loss: 0.0316 | Train Acc: 0.9892
+Step 13500: Train Loss: 0.0321 | Train Acc: 0.9890
+Step 13600: Train Loss: 0.0315 | Train Acc: 0.9892
+Step 13700: Train Loss: 0.0314 | Train Acc: 0.9894
+Step 13800: Train Loss: 0.0320 | Train Acc: 0.9891
+Step 13900: Train Loss: 0.0319 | Train Acc: 0.9892
+Step 14000: Train Loss: 0.0312 | Train Acc: 0.9895
+Epoch 9 Summary
+Train Loss: 0.0316 | Train Acc: 0.9894
+Val Loss: 0.1573 | Val Acc: 0.9554
+------------------------------
+Early stopping!
+
