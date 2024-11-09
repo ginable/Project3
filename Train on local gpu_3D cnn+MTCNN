@@ -1,0 +1,455 @@
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import Dataset, DataLoader
+import torchvision.transforms as transforms
+import json
+import cv2
+import numpy as np
+from pathlib import Path
+import os
+from sklearn.model_selection import train_test_split
+from tqdm import tqdm
+from torch.utils.data.sampler import WeightedRandomSampler
+from facenet_pytorch import MTCNN
+
+# CUDA 메모리 설정
+torch.cuda.empty_cache()
+torch.backends.cudnn.benchmark = True
+
+# 경로 설정
+VIDEO_FOLDER = Path('D:/data/deepfake/dfdc_train_part_1')
+MODEL_SAVE_DIR = Path('D:/data/deepfake/saved_models')
+
+# 경로 존재 확인 및 생성
+if not VIDEO_FOLDER.exists():
+    raise FileNotFoundError(f"Video folder not found: {VIDEO_FOLDER}")
+
+if not MODEL_SAVE_DIR.exists():
+    os.makedirs(MODEL_SAVE_DIR)
+    print(f"Created model save directory: {MODEL_SAVE_DIR}")
+
+class DeepFakeDataset(Dataset):
+    def __init__(self, json_path, video_dir, transform=None, num_frames=32):
+        self.video_dir = Path(video_dir)
+        self.transform = transform
+        self.num_frames = num_frames
+        
+        # MTCNN 초기화
+        self.mtcnn = MTCNN(select_largest=False, post_process=False, device='cuda' if torch.cuda.is_available() else 'cpu')
+        
+        # JSON 파일 로드
+        with open(json_path, 'r') as f:
+            self.data = json.load(f)
+            
+        # 비디오 파일 리스트와 라벨 생성
+        self.videos = []
+        self.labels = []
+        for video_name, info in self.data.items():
+            video_path = self.video_dir / video_name
+            if info['split'] == 'train' and video_path.exists():
+                self.videos.append(video_name)
+                self.labels.append(1 if info['label'] == 'FAKE' else 0)
+            elif not video_path.exists():
+                print(f"Warning: Video file not found: {video_path}")
+        
+        print(f"Loaded {len(self.videos)} videos")
+        print(f"FAKE videos: {sum(self.labels)}")
+        print(f"REAL videos: {len(self.labels) - sum(self.labels)}")
+    
+    
+    def __len__(self):
+        return len(self.videos)
+    
+    def load_video(self, video_path):
+        frames = []
+        cap = cv2.VideoCapture(str(video_path))
+        
+        if not cap.isOpened():
+            print(f"Warning: Could not open video: {video_path}")
+            return torch.zeros((self.num_frames, 3, 224, 224))
+        
+        try:
+            # 전체 프레임 수 계산
+            total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+            
+            if total_frames <= 0:
+                print(f"Warning: Invalid frame count for video: {video_path}")
+                return torch.zeros((self.num_frames, 3, 224, 224))
+            
+            # 균등한 간격으로 프레임 추출
+            frame_indices = np.linspace(0, total_frames-1, self.num_frames, dtype=int)
+            
+            for frame_idx in frame_indices:
+                cap.set(cv2.CAP_PROP_POS_FRAMES, frame_idx)
+                ret, frame = cap.read()
+                if ret:
+                    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    # 얼굴 검출 및 크롭
+                    face = self.mtcnn(frame)
+                    if face is not None:
+                        if self.transform:
+                            face = self.transform(face.permute(1, 2, 0).cpu().numpy().astype(np.uint8))
+                        frames.append(face)
+                    else:
+                        # 얼굴 검출 실패 시 빈 프레임 추가
+                        frames.append(torch.zeros((3, 224, 224)))
+                else:
+                    # 빈 프레임 추가
+                    frames.append(torch.zeros((3, 224, 224)))
+        
+        except Exception as e:
+            print(f"Error processing video {video_path}: {str(e)}")
+            return torch.zeros((self.num_frames, 3, 224, 224))
+        
+        finally:
+            cap.release()
+        
+        # 프레임 수 부족 시 0으로 채우기
+        while len(frames) < self.num_frames:
+            frames.append(torch.zeros((3, 224, 224)))
+        
+        # 모든 프레임 크기 통일
+        frames = [f if f.shape == (3, 224, 224) else torch.nn.functional.interpolate(
+            f.unsqueeze(0), size=(224, 224), mode='bilinear', align_corners=False).squeeze(0) for f in frames]
+        
+        return torch.stack(frames)
+    
+    def __getitem__(self, idx):
+        video_path = self.video_dir / self.videos[idx]
+        label = self.labels[idx]
+        
+        # 비디오 로드 및 프레임 추출
+        frames = self.load_video(video_path)
+        
+        return frames, label
+
+class DeepFakeDetector(nn.Module):
+    def __init__(self, num_frames=32):
+        super(DeepFakeDetector, self).__init__()
+        
+        # 3D CNN 부분
+        self.conv3d = nn.Sequential(
+            nn.Conv3d(3, 64, kernel_size=(3, 3, 3), padding=(1, 1, 1)),
+            nn.BatchNorm3d(64),
+            nn.ReLU(),
+            nn.MaxPool3d(kernel_size=(1, 2, 2)),
+            
+            nn.Conv3d(64, 128, kernel_size=(3, 3, 3), padding=(1, 1, 1)),
+            nn.BatchNorm3d(128),
+            nn.ReLU(),
+            nn.MaxPool3d(kernel_size=(2, 2, 2)),
+            
+            nn.Conv3d(128, 256, kernel_size=(3, 3, 3), padding=(1, 1, 1)),
+            nn.BatchNorm3d(256),
+            nn.ReLU(),
+            nn.MaxPool3d(kernel_size=(2, 2, 2)),
+            
+            nn.Conv3d(256, 512, kernel_size=(3, 3, 3), padding=(1, 1, 1)),
+            nn.BatchNorm3d(512),
+            nn.ReLU(),
+            nn.MaxPool3d(kernel_size=(2, 2, 2)),
+        )
+        
+        self.adaptive_pool = nn.AdaptiveAvgPool3d((1, 1, 1))
+        
+        # 완전연결층
+        self.fc = nn.Sequential(
+            nn.Linear(512, 256),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+            nn.Linear(256, 128),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+            nn.Linear(128, 1)
+        )
+        
+        # 가중치 초기화
+        self._initialize_weights()
+    
+    def _initialize_weights(self):
+        for m in self.modules():
+            if isinstance(m, nn.Conv3d):
+                nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+                if m.bias is not None:
+                    nn.init.constant_(m.bias, 0)
+            elif isinstance(m, nn.BatchNorm3d):
+                nn.init.constant_(m.weight, 1)
+                nn.init.constant_(m.bias, 0)
+            elif isinstance(m, nn.Linear):
+                nn.init.normal_(m.weight, 0, 0.01)
+                nn.init.constant_(m.bias, 0)
+    
+    def forward(self, x):
+        # x shape: (batch, num_frames, channels, height, width)
+        x = x.permute(0, 2, 1, 3, 4)
+        x = self.conv3d(x)
+        x = self.adaptive_pool(x)
+        x = x.view(x.size(0), -1)
+        x = self.fc(x)
+        return x
+
+def train_model(model, train_loader, val_loader, criterion, optimizer, scheduler, num_epochs, device):
+    best_val_acc = 0.0
+    
+    for epoch in range(num_epochs):
+        # Training phase
+        model.train()
+        running_loss = 0.0
+        correct = 0
+        total = 0
+        
+        train_pbar = tqdm(train_loader, desc=f'Epoch {epoch+1}/{num_epochs} [Train]')
+        for inputs, labels in train_pbar:
+            inputs = inputs.to(device)
+            labels = labels.float().to(device)
+            
+            optimizer.zero_grad()
+            outputs = model(inputs).squeeze()
+            loss = criterion(outputs, labels)
+            loss.backward()
+            
+            # Gradient clipping
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+            
+            optimizer.step()
+            scheduler.step()
+            
+            running_loss += loss.item()
+            predicted = (torch.sigmoid(outputs) > 0.5).float()
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
+            
+            train_pbar.set_postfix({
+                'loss': f'{running_loss/total:.4f}',
+                'acc': f'{100*correct/total:.2f}%'
+            })
+        
+        train_acc = 100 * correct / total
+        
+        # Validation phase
+        model.eval()
+        val_loss = 0.0
+        val_correct = 0
+        val_total = 0
+        
+        with torch.no_grad():
+            val_pbar = tqdm(val_loader, desc=f'Epoch {epoch+1}/{num_epochs} [Val]')
+            for inputs, labels in val_pbar:
+                inputs = inputs.to(device)
+                labels = labels.float().to(device)
+                
+                outputs = model(inputs).squeeze()
+                loss = criterion(outputs, labels)
+                
+                val_loss += loss.item()
+                predicted = (torch.sigmoid(outputs) > 0.5).float()
+                val_total += labels.size(0)
+                val_correct += (predicted == labels).sum().item()
+                
+                val_pbar.set_postfix({
+                    'loss': f'{val_loss/val_total:.4f}',
+                    'acc': f'{100*val_correct/val_total:.2f}%'
+                })
+        
+        val_acc = 100 * val_correct / val_total
+        
+        print(f'\nEpoch {epoch+1}/{num_epochs}:')
+        print(f'Train Loss: {running_loss/total:.4f}, Train Acc: {train_acc:.2f}%')
+        print(f'Val Loss: {val_loss/val_total:.4f}, Val Acc: {val_acc:.2f}%')
+        
+        # Save model if validation accuracy improves
+        if val_acc > best_val_acc:
+            best_val_acc = val_acc
+            model_save_path = MODEL_SAVE_DIR / f'model_epoch_{epoch+1}_acc_{val_acc:.2f}.pth'
+            torch.save({
+                'epoch': epoch,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'scheduler_state_dict': scheduler.state_dict(),
+                'val_acc': val_acc,
+            }, model_save_path)
+            print(f'Saved best model to {model_save_path}')
+
+def main():
+     # 하이퍼파라미터 수정
+    num_frames = 16  # 32에서 16으로 줄임
+    batch_size = 4   # 더 작은 배치 사이즈
+    num_epochs = 10
+    learning_rate = 1e-4  # 학습률 조정
+    
+    # GPU 설정
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print(f"Using device: {device}")
+    
+    # 데이터 전처리
+    transform = transforms.Compose([
+        transforms.ToPILImage(),
+        transforms.Resize((160, 160)),  # 해상도 줄임
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                           std=[0.229, 0.224, 0.225])
+    ])
+    
+    # 데이터셋 생성
+    dataset = DeepFakeDataset(
+        json_path=VIDEO_FOLDER / 'metadata.json',
+        video_dir=VIDEO_FOLDER,
+        transform=transform,
+        num_frames=num_frames
+    )
+    
+    # 클래스 가중치 계산
+    labels = dataset.labels
+    class_counts = [labels.count(0), labels.count(1)]  # REAL: 0, FAKE: 1
+    weights = 1. / torch.tensor(class_counts, dtype=torch.float)
+    samples_weights = weights[torch.tensor(labels)]
+    
+    # WeightedRandomSampler 생성
+    sampler = WeightedRandomSampler(
+        weights=samples_weights,
+        num_samples=len(samples_weights),
+        replacement=True
+    )
+    
+    # 데이터 로더 수정
+    train_loader = DataLoader(
+        dataset,
+        batch_size=batch_size,
+        sampler=sampler,
+        num_workers=0,  # Windows에서는 0으로 설정
+        pin_memory=True
+    )
+    
+    val_loader = DataLoader(
+        dataset,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=0,
+        pin_memory=True
+    )
+    
+    # 모델 초기화
+    model = DeepFakeDetector(num_frames=num_frames).to(device)
+    
+    # 손실 함수 수정 (클래스 가중치 추가)
+    pos_weight = torch.tensor([class_counts[0]/class_counts[1]]).to(device)
+    criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
+    
+    # 옵티마이저 설정
+    optimizer = optim.AdamW(
+        model.parameters(),
+        lr=learning_rate,
+        weight_decay=0.01
+    )
+    
+    # 학습률 스케줄러 수정
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer,
+        mode='max',
+        factor=0.5,
+        patience=2,
+        verbose=True
+    )
+    
+    # 모델 학습
+    train_model(model, train_loader, val_loader, criterion, optimizer, scheduler, num_epochs, device)
+
+# train_model 함수 수정
+def train_model(model, train_loader, val_loader, criterion, optimizer, scheduler, num_epochs, device):
+    best_val_acc = 0.0
+    
+    for epoch in range(num_epochs):
+        # Training phase
+        model.train()
+        running_loss = 0.0
+        correct = 0
+        total = 0
+        
+        # 메모리 초기화
+        torch.cuda.empty_cache()
+        
+        train_pbar = tqdm(train_loader, desc=f'Epoch {epoch+1}/{num_epochs} [Train]')
+        for i, (inputs, labels) in enumerate(train_pbar):
+            try:
+                inputs = inputs.to(device)
+                labels = labels.float().to(device)
+                
+                optimizer.zero_grad()
+                outputs = model(inputs).squeeze()
+                loss = criterion(outputs, labels)
+                loss.backward()
+                
+                # Gradient clipping
+                torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+                
+                optimizer.step()
+                
+                running_loss += loss.item()
+                predicted = (torch.sigmoid(outputs) > 0.5).float()
+                total += labels.size(0)
+                correct += (predicted == labels).sum().item()
+                
+                # 진행상황 업데이트
+                if i % 10 == 0:
+                    train_pbar.set_postfix({
+                        'loss': f'{running_loss/(i+1):.4f}',
+                        'acc': f'{100*correct/total:.2f}%'
+                    })
+                    
+            except RuntimeError as e:
+                print(f"Error in batch {i}: {str(e)}")
+                continue
+        
+        # Validation phase
+        val_acc = validate_model(model, val_loader, criterion, device)
+        
+        # 학습률 조정
+        scheduler.step(val_acc)
+        
+        # 모델 저장
+        if val_acc > best_val_acc:
+            best_val_acc = val_acc
+            torch.save({
+                'epoch': epoch,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'val_acc': val_acc,
+            }, MODEL_SAVE_DIR / f'model_epoch_{epoch+1}_acc_{val_acc:.2f}.pth')
+
+def validate_model(model, val_loader, criterion, device):
+    model.eval()
+    val_loss = 0.0
+    val_correct = 0
+    val_total = 0
+    
+    with torch.no_grad():
+        val_pbar = tqdm(val_loader, desc='Validation')
+        for inputs, labels in val_pbar:
+            try:
+                inputs = inputs.to(device)
+                labels = labels.float().to(device)
+                
+                outputs = model(inputs).squeeze()
+                loss = criterion(outputs, labels)
+                
+                val_loss += loss.item()
+                predicted = (torch.sigmoid(outputs) > 0.5).float()
+                val_total += labels.size(0)
+                val_correct += (predicted == labels).sum().item()
+                
+                val_pbar.set_postfix({
+                    'loss': f'{val_loss/val_total:.4f}',
+                    'acc': f'{100*val_correct/val_total:.2f}%'
+                })
+                
+            except RuntimeError as e:
+                print(f"Error in validation: {str(e)}")
+                continue
+    
+    val_acc = 100 * val_correct / val_total
+    print(f'\nValidation Accuracy: {val_acc:.2f}%')
+    return val_acc
+
+if __name__ == "__main__":
+    main()
