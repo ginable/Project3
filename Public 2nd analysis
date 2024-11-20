@@ -11,3 +11,41 @@ s3fdfacedetector 이라는 얼굴 디텍터를 사용한게 특징인데, import
 # I've modified the code to remove all stuff related to landmarks extraction, so I've used only s3fd detection module
 sys.path.insert(0, "../input")
 import s3fdfacedetector
+
+
+bah
+
+(deepfake) C:\Users\USER>git clone https://github.com/1adrianb/face-alignment.git
+
+
+
+
+
+
+from detection.sfd_detector import SFDDetector
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+fd = SFDDetector(device)
+
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[33], line 1
+----> 1 from detection.sfd_detector import SFDDetector
+      2 device = 'cuda' if torch.cuda.is_available() else 'cpu'
+      3 fd = SFDDetector(device)
+
+File c:\Users\USER\Downloads\detection\sfd_detector.py:4
+      1 import torch
+      2 from torch.utils.model_zoo import load_url
+----> 4 from ..core import FaceDetector
+      6 from .net_s3fd import s3fd
+      7 from .bbox import nms
+
+ValueError: attempted relative import beyond top-level package
+
+
+하; 
+
+
+S3FDFaceDetector는 패스하겠습니다.
+
+
