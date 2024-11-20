@@ -1,0 +1,13 @@
+https://www.kaggle.com/code/vostankovich/efnet6-ensemble-5-clip-1e-15
+EFNet6 ensemble_5 clip_1e-15
+
+s3fdfacedetector 이라는 얼굴 디텍터를 사용한게 특징인데, import 하는데 어려움 겪는중
+1st 코드의 mtcnn 가져와서 활용해보려고 시도중
+
+# Taken from here: https://github.com/1adrianb/face-alignment
+# Thanks to Adrian Bulat (https://github.com/1adrianb)
+# Licensed under BSD 3-Clause, which allows modification, distribution, commercial and private use
+# Imported as package because pip installation requires internet to download weights for detector
+# I've modified the code to remove all stuff related to landmarks extraction, so I've used only s3fd detection module
+sys.path.insert(0, "../input")
+import s3fdfacedetector
