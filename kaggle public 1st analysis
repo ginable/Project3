@@ -1,0 +1,28 @@
+https://www.kaggle.com/code/vaillant/dfdc-3d-2d-inc-cutmix-with-3d-model-fix
+
+DFDC 3D & 2D inc cutmix with 3D model fix
+
+로컬 기준 수행 불가 판단
+
+이유: 
+
+# Input data
+INPUT_DIR = "/kaggle/input/deepfake-detection-challenge/test_videos"
+PRETRAINED_MODELS_3D = [{'type':'i3d',
+                         'path':"/kaggle/input/deepfake-detection-jph/j3d_e1_l0.1374.model"},
+                        {'type':'res34',
+                         'path':"/kaggle/input/deepfake-detection-jph/res34_1cy_minaug_nonorm_e4_l0.1794.model"},
+                        {'type':'mc3_112',
+                         'path':"/kaggle/input/deepfake-detection-jph/mc3_18_112_1cy_lilaug_nonorm_e9_l0.1905.model"},
+                        {'type':'mc3_224',
+                         'path':"/kaggle/input/deepfake-detection-jph/mc3_18_112t224_1cy_lilaug_nonorm_e7_l0.1901.model"},
+                        {'type':'r2p1_112',
+                         'path':"/kaggle/input/deepfake-detection-jph/r2p1_18_8_112tr_112te_e12_l0.1741.model"},
+                        {'type':'i3d',
+                         'path':"/kaggle/input/deepfake-detection-jph/i3dcutmix_e11_l0.1612.model"},
+                        {'type':'r2p1_112',
+                         'path':"/kaggle/input/deepfake-detection-jph/r2plus1dcutmix_112_e10_l0.1608.model"}]
+
+위의 pretrained 모델들의 출처를 찾기 어려움.
+
+해당 코드에서는 mtcnn 활용법만 발췌하기로 결정
