@@ -55,3 +55,6 @@ eda 관련 3~5페이지
 전처리 , 증강쪽 3~5
 
 모델 관련 :3~5
+
+학습 모델
+https://drive.google.com/drive/folders/1YTBwXReXN7I2lrQGD4EhoYJh-x8UmytW?usp=sharing
